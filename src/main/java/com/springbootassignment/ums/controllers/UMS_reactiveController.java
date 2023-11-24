@@ -1,6 +1,7 @@
 package com.springbootassignment.ums.controllers;
 
 import com.springbootassignment.ums.models.MyUser;
+import com.springbootassignment.ums.payload.LoginDTO;
 import com.springbootassignment.ums.payload.RegisterDTO;
 import com.springbootassignment.ums.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,9 +63,9 @@ public class UMS_reactiveController {
     }
 
     @PostMapping("/login")
-    @ResponseStatus(HttpStatus.OK)
-    public Mono<MyUser> loadUser(@RequestBody String email){
-        return userService.loadUserByEmail(email);
+    public Mono<MyUser> loadUser(@RequestBody LoginDTO loginDTO){
+        String userEmail = loginDTO.getEmail();
+        return userService.loadUserByEmail(userEmail);
     }
 
 }
