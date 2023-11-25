@@ -12,14 +12,16 @@ public class MyUser {
     @Id
     private int id;
     private String email;
-    private String first_name;
-    private String last_name;
+    private String password;
+    private String firstName;
+    private String lastName;
     private String about;
 
-    public MyUser(String email, String first_name, String last_name){
+    public MyUser(String email, String password, String firstName, String lastName){
         this.email = email;
-        this.first_name = first_name;
-        this.last_name = last_name;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
 }

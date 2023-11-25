@@ -4,6 +4,11 @@ import com.springbootassignment.ums.models.MyUser;
 import com.springbootassignment.ums.payload.RegisterDTO;
 import com.springbootassignment.ums.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -13,17 +18,20 @@ import java.util.Optional;
 @Service
 public class UserService {
 
-    UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     //Constructor
     @Autowired
-    public UserService(UserRepository userRepository){
+    public UserService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder){
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     //user register
     public Mono<MyUser> createUser(RegisterDTO registerDTO){
-        MyUser user = UserUtils.toUser(registerDTO);
+        String encryptPw = passwordEncoder.encode(registerDTO.getPassword());
+        MyUser user = new MyUser(registerDTO.getEmail(), encryptPw, registerDTO.getFirstName(), registerDTO.getLastName());
         return userRepository.save(user);
     }
 
