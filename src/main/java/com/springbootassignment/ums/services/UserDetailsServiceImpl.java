@@ -23,7 +23,7 @@ public class UserDetailsServiceImpl implements ReactiveUserDetailsService {
                 .map(user -> User.builder()
                         .username(user.getEmail())
                         .password(user.getPassword())
-                        .roles("USER") // Set roles or authorities here
+                        .roles(user.getRole()) // Set roles or authorities here
                         .build());
     }
 }

@@ -4,6 +4,7 @@ import com.springbootassignment.ums.services.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.authentication.UserDetailsRepositoryReactiveAuthenticationManager;
@@ -19,6 +20,33 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration
 @EnableWebFluxSecurity
 public class SecurityConfig {
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public ReactiveAuthenticationManager authenticationManager(ReactiveUserDetailsService userDetailsService, BCryptPasswordEncoder passwordEncoder) {
+        UserDetailsRepositoryReactiveAuthenticationManager authenticationManager = new UserDetailsRepositoryReactiveAuthenticationManager(userDetailsService);
+        authenticationManager.setPasswordEncoder(passwordEncoder);
+        return authenticationManager;
+    }
+
+    @Bean
+    public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http){
+        return http
+                .authorizeExchange(ex -> ex
+                        .pathMatchers("/api/register").permitAll()
+                        .pathMatchers(HttpMethod.GET, "/api/users").permitAll()
+                        .pathMatchers(HttpMethod.DELETE, "/api/users").hasRole("ADMIN")
+                        .pathMatchers(HttpMethod.DELETE, "/api/user/{id}").hasRole("ADMIN")
+                        .anyExchange().authenticated())
+                .csrf(csrf -> csrf.disable())
+                .httpBasic(withDefaults())
+                .formLogin(withDefaults())
+                .build();
+    }
+}
 
 //    private final UserDetailsServiceImpl userDetailsService;
 //    private final BCryptPasswordEncoder passwordEncoder;
@@ -42,32 +70,3 @@ public class SecurityConfig {
 //                .build();
 //        return new MapReactiveUserDetailsService(user);
 //    }
-
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public ReactiveAuthenticationManager authenticationManager(ReactiveUserDetailsService userDetailsService, BCryptPasswordEncoder passwordEncoder) {
-        UserDetailsRepositoryReactiveAuthenticationManager authenticationManager = new UserDetailsRepositoryReactiveAuthenticationManager(userDetailsService);
-        authenticationManager.setPasswordEncoder(passwordEncoder);
-        return authenticationManager;
-    }
-
-    @Bean
-    public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http){
-        return http
-                .authorizeExchange(ex -> ex
-                        .pathMatchers("api/register").permitAll()
-                        .pathMatchers("api/login").permitAll()
-                        .anyExchange()
-                        .authenticated())
-                .csrf(csrf -> csrf.disable())
-                .httpBasic(withDefaults())
-                .formLogin(withDefaults())
-                .build();
-    }
-
-
-}

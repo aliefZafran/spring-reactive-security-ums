@@ -21,24 +21,24 @@ public class UMS_reactiveController {
         this.userService = userService;
     }
 
-    @GetMapping("/test")
+    @GetMapping("/test") //protected
     public String testApi(){
         return "hello world";
     }
 
-    @PostMapping("/register")
+    @PostMapping("/register") //public
     @ResponseStatus(HttpStatus.CREATED)
     public Mono<MyUser> register(@RequestBody RegisterDTO user){
         return userService.createUser(user);
     }
 
-    @GetMapping("/user/{id}")
+    @GetMapping("/user/{id}") //protected
     @ResponseStatus(HttpStatus.OK)
     public Mono<MyUser> getUserDetails(@PathVariable int id){
         return userService.readUser(id);
     }
 
-    @GetMapping("/users")
+    @GetMapping("/users") //public
     @ResponseStatus(HttpStatus.OK)
     public Flux<MyUser> getAllUsers(){
         return userService.list();

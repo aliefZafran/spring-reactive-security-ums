@@ -32,6 +32,7 @@ public class UserService {
     public Mono<MyUser> createUser(RegisterDTO registerDTO){
         String encryptPw = passwordEncoder.encode(registerDTO.getPassword());
         MyUser user = new MyUser(registerDTO.getEmail(), encryptPw, registerDTO.getFirstName(), registerDTO.getLastName());
+        user.setRole("USER");
         return userRepository.save(user);
     }
 
