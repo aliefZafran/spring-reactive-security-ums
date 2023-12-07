@@ -1,1 +1,0 @@
-INSERT into my_user(email, password, first_name, last_name, role, disabled) VALUES ('adminuser@email.com', '$2a$12$XEZZGJrEvntmqOZ7cnBPcuZKQrrhlR9VKmm43t7NMcZKr78c.A4HW', 'admin', 'user', 'ADMIN', FALSE);

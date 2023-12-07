@@ -16,4 +16,7 @@ public interface UserRepository extends R2dbcRepository<MyUser, Integer> {
 
     @Query("SELECT * FROM MY_USER u WHERE u.reset_token = :token")
     Mono<MyUser> findByResetToken(String token);
+
+    @Query("SELECT * FROM MY_USER u WHERE u.role = :role")
+    Mono<MyUser> findByRole(String role);
 }

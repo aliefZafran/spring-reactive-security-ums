@@ -2,24 +2,15 @@ package com.springbootassignment.ums.services;
 
 import com.springbootassignment.ums.models.MyUser;
 import com.springbootassignment.ums.payload.RegisterDTO;
-import com.springbootassignment.ums.utils.UserUtils;
 import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -128,13 +119,6 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    //to remove
-    public Mono<MyUser> loadUserByEmail(String email) {
-        return userRepository.findByEmail(email)
-                .onErrorMap(
-                        e -> new RuntimeException("Cannot find user with email: " + email + ". Error: " + e)
-                );
-    }
 
     public Mono<MyUser> update(int id, MyUser user) {
         return userRepository.findById(id)
@@ -167,7 +151,6 @@ public class UserService {
 
     //delete user
     public Mono<String> deleteUser(int id) {
-//        return userRepository.deleteById(id).onErrorMap(e -> new RuntimeException("Cannot find user with id: " + id));
         return userRepository.findById(id)
                 .flatMap(user -> {
                     userRepository.deleteById(id);
@@ -180,21 +163,3 @@ public class UserService {
         return userRepository.deleteAll();
     }
 }
-
-//Services
-//
-//    public Flux<MyUser> getUserByEmail(String email){
-//        return userRepository.findByEmail(email);
-//    }
-//
-//    public Mono<MyUser> findById(Long id){
-//        return userRepository.findById(id);
-//    }
-//
-//    public Mono<MyUser> newUser(MyUser newUser){
-//        return userRepository.save(newUser);
-//    }
-//
-//    public Flux<MyUser> getAll(){
-//        return userRepository.findAll();
-//    }

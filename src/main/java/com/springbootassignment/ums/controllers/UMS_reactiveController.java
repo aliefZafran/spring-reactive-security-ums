@@ -1,19 +1,14 @@
 package com.springbootassignment.ums.controllers;
 
 import com.springbootassignment.ums.models.MyUser;
-import com.springbootassignment.ums.payload.LoginDTO;
 import com.springbootassignment.ums.payload.RegisterDTO;
 import com.springbootassignment.ums.services.UserService;
-import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
-import java.io.UnsupportedEncodingException;
 
 @RestController
 @RequestMapping("/api")
@@ -33,7 +28,6 @@ public class UMS_reactiveController {
 
     @PostMapping("/register")
     public Mono<String> registerUser(@RequestBody RegisterDTO registerDTO){
-//        String siteURL = getSiteURL(request);
         return userService.create(registerDTO).thenReturn("Registration Successful, please verify your account in your email.");
     }
 
@@ -47,10 +41,6 @@ public class UMS_reactiveController {
                         return "verify fail";
                     }
                 });
-    }
-    private String getSiteURL(ServerHttpRequest request) {
-        String siteURL = request.getURI().toString();
-        return siteURL.replace(request.getPath().toString(), "");
     }
 
     @PostMapping("/forgot-password")
@@ -74,11 +64,6 @@ public class UMS_reactiveController {
         return userService.getUser(id);
     }
 
-//    @GetMapping("/user")
-//    @ResponseStatus(HttpStatus.OK)
-//    public Mono<MyUser> getUserDetailsByCode(@RequestParam("code") String code) {
-//        return userService.readUserByCode(code);
-//    }
 
     @GetMapping("/users") //public
     @ResponseStatus(HttpStatus.OK)
@@ -101,12 +86,6 @@ public class UMS_reactiveController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public Mono<Void> deleteUsers() {
         return userService.delete();
-    }
-
-    @PostMapping("/login")
-    public Mono<MyUser> loadUser(@RequestBody LoginDTO loginDTO) {
-        String userEmail = loginDTO.getEmail();
-        return userService.loadUserByEmail(userEmail);
     }
 
 }
