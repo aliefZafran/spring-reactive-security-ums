@@ -5,8 +5,8 @@ import com.springbootassignment.ums.payload.RegisterDTO;
 
 public class UserUtils {
 
-    public static MyUser toUser(RegisterDTO registerUser){
-        return new MyUser(registerUser.getEmail(), registerUser.getPassword(), registerUser.getFirstName(), registerUser.getLastName());
-    }
+//    public static MyUser toUser(RegisterDTO registerUser){
+//        return new MyUser(registerUser.getEmail(), registerUser.getPassword(), registerUser.getFirstName(), registerUser.getLastName());
+//    }
 
 }

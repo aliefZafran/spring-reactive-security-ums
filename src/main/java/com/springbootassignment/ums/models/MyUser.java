@@ -17,6 +17,9 @@ public class MyUser {
     private String lastName;
     private String role;
     private String about;
+    private Boolean disabled;
+    private String verificationCode;
+    private String resetToken;
 
     public MyUser(String email, String password, String firstName, String lastName){
         this.email = email;

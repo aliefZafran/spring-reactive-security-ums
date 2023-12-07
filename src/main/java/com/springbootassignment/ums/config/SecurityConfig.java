@@ -38,15 +38,21 @@ public class SecurityConfig {
                 .authorizeExchange(ex -> ex
                         .pathMatchers("/api/register").permitAll()
                         .pathMatchers(HttpMethod.GET, "/api/users").permitAll()
+                        .pathMatchers(HttpMethod.GET, "/api/verify").permitAll()
+                        .pathMatchers(HttpMethod.GET, "/api/reset-password").permitAll()
+                        .pathMatchers(HttpMethod.POST, "/api/reset-password").permitAll()
+                        .pathMatchers(HttpMethod.POST, "/api/forgot-password").permitAll()
                         .pathMatchers(HttpMethod.DELETE, "/api/users").hasRole("ADMIN")
                         .pathMatchers(HttpMethod.DELETE, "/api/user/{id}").hasRole("ADMIN")
                         .anyExchange().authenticated())
+                .cors(cors -> cors.disable())
                 .csrf(csrf -> csrf.disable())
                 .httpBasic(withDefaults())
                 .formLogin(withDefaults())
                 .build();
     }
 }
+
 
 //    private final UserDetailsServiceImpl userDetailsService;
 //    private final BCryptPasswordEncoder passwordEncoder;
