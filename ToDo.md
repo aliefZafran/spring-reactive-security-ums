@@ -38,6 +38,3 @@ Upon starting up the app, an admin account has been created to ensure there is a
 - [X] if exists, generate token then send email with the token
 - [X] Success will send an email, containing link to reset-password?token=<token>
 - [X] reset-password will accept and inspect the token, and new password
-
-
-## test to push from another computer
