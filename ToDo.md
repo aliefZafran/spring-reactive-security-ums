@@ -7,13 +7,15 @@
 - [ ] Redo user roles
     - [X] Setup an admin account via initialization in db
     - [X] Test roles between spring sec and db
-    - [ ] Revise update service
+    - [X] Revise update service
     - [ ] Limit access as to what users can edit for their profile
     - [ ] Allow admin to set roles
-- [ ] Refactor code to add exception handling
-- [ ] <mark> Create login controller </mark>
+- [X] Refactor code to add exception handling
+- [X] Migrate to postgres database
 - [ ] Add user attributes in model, schema.sql, constructor in model class
-- [ ] Migrate to postgres database
+- [ ] Study for hibernate reactive
+- [ ] Look into flyway/liquibase
+- [ ] Create login controller 
 
 
 ## Use case
