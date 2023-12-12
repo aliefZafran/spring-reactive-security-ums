@@ -119,46 +119,59 @@ public class UserService {
         return userRepository.findAll();
     }
 
-
+    //update user
     public Mono<MyUser> update(int id, MyUser user) {
         return userRepository.findById(id)
                 .flatMap(existingUser -> {
-                    // Use reflection to ge-t all fields
+                    // Use reflection to get all fields
                     Field[] fields = MyUser.class.getDeclaredFields();
 
                     for (Field field : fields) {
                         field.setAccessible(true);
                         try {
-                            // Get the value of the field from theUser
-                            Object value = field.get(user);
-                            // Update the field in existingUser only if the value is not null
-                            if (value != null) {
-                                field.set(existingUser, value);
+                            // Get the name of the field
+                            String fieldName = field.getName();
+
+                            // Check if the field is being updated and handle the "password" field
+                            if (fieldName.equals("password")) {
+                                Object value = field.get(user);
+                                if (value != null) {
+                                    String updatedPassword = (String) value;
+                                    String encryptedPassword = passwordEncoder.encode(updatedPassword);
+                                    field.set(existingUser, encryptedPassword);
+                                }
+                            } else {
+                                // For other fields, update if not null
+                                Object value = field.get(user);
+                                if (value != null) {
+                                    field.set(existingUser, value);
+                                }
                             }
                         } catch (IllegalAccessException e) {
-                            return Mono.error(e); // Propagate the error as Mono.error
+                            return Mono.error(e);
                         }
                     }
 
                     // Set the ID before saving
                     existingUser.setId(id);
-                    //update the data to db
+                    // Update the data in the database
                     return userRepository.save(existingUser);
                 })
                 .onErrorMap(e -> new RuntimeException(e.getMessage()));
     }
 
 
+
     //delete user
     public Mono<String> deleteUser(int id) {
         return userRepository.findById(id)
-                .flatMap(user -> {
-                    userRepository.deleteById(id);
-                    return Mono.just("User with id " + id + " has been deleted");
-                })
-                .defaultIfEmpty("User with id " + id + " not found");
+                .flatMap(user -> userRepository.deleteById(id)
+                        .thenReturn("User with id " + id + " has been deleted")
+                )
+                .switchIfEmpty(Mono.just("User with id " + id + " not found"));
     }
 
+    //delete all users
     public Mono<Void> delete() {
         return userRepository.deleteAll();
     }

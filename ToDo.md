@@ -4,16 +4,16 @@
   - [X] User: Login, edit profile, change password
   - [X] Public: test api
 - [X] Add feature: email verification and forgot password
-- [ ] Redo user roles
+- [X] Migrate to postgres database
+- [X] Refactor code to add exception handling
+- [X] Add swagger for api documentation
+- [X] Redo user roles
     - [X] Setup an admin account via initialization in db
     - [X] Test roles between spring sec and db
-    - [ ] Revise update service
-    - [ ] Limit access as to what users can edit for their profile
-    - [ ] Allow admin to set roles
-- [ ] Refactor code to add exception handling
+    - [X] Revise update service
+- [ ] Refactor controller to handle unexpected route
+- [ ] Add user attributes in model, update table V3, constructor in model class
 - [ ] <mark> Create login controller </mark>
-- [ ] Add user attributes in model, schema.sql, constructor in model class
-- [X] Migrate to postgres database
 
 
 ## Use case

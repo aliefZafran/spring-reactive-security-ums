@@ -73,8 +73,8 @@ public class UMS_reactiveController {
 
     @PutMapping("/user/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Mono<MyUser> updateUser(@PathVariable int id, @RequestBody MyUser updUser) {
-        return userService.update(id, updUser);
+    public Mono<MyUser> updateUser(@PathVariable int id, @RequestBody MyUser updateUser) {
+        return userService.update(id, updateUser);
     }
 
     @DeleteMapping("/user/{id}")
