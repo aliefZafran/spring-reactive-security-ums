@@ -13,7 +13,7 @@
 - [ ] Refactor code to add exception handling
 - [ ] <mark> Create login controller </mark>
 - [ ] Add user attributes in model, schema.sql, constructor in model class
-- [ ] Migrate to postgres database
+- [X] Migrate to postgres database
 
 
 ## Use case

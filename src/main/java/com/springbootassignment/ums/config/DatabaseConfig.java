@@ -1,4 +1,4 @@
-package com.springbootassignment.ums.utils;
+package com.springbootassignment.ums.config;
 
 import org.flywaydb.core.Flyway;
 import org.springframework.boot.autoconfigure.flyway.FlywayProperties;
@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @EnableConfigurationProperties({ R2dbcProperties.class, FlywayProperties.class })
-class DatabaseConfig {
+public class DatabaseConfig {
     @Bean(initMethod = "migrate")
     public Flyway flyway(FlywayProperties flywayProperties, R2dbcProperties r2dbcProperties) {
         return Flyway.configure()
