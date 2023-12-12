@@ -36,8 +36,10 @@ public class SecurityConfig {
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http){
         return http
                 .authorizeExchange(ex -> ex
-                        .pathMatchers("/api/register").permitAll()
+                        .pathMatchers(HttpMethod.POST, "/api/register").permitAll()
                         .pathMatchers(HttpMethod.GET, "/api/users").permitAll()
+                        .pathMatchers(HttpMethod.GET, "/swagger-ui.html").permitAll()
+                        .pathMatchers(HttpMethod.GET, "/api-docs").permitAll()
                         .pathMatchers(HttpMethod.GET, "/api/verify").permitAll()
                         .pathMatchers(HttpMethod.GET, "/api/reset-password").permitAll()
                         .pathMatchers(HttpMethod.POST, "/api/reset-password").permitAll()
