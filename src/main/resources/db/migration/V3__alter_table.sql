@@ -1,0 +1,6 @@
+ALTER TABLE my_user
+ADD COLUMN skills VARCHAR(255),
+ADD COLUMN projects VARCHAR(255),
+ADD COLUMN experiences VARCHAR(255),
+ADD COLUMN assignments VARCHAR(255),
+ADD COLUMN profile_picture VARCHAR(255);

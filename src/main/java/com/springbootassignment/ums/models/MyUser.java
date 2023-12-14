@@ -17,6 +17,11 @@ public class MyUser {
     private String lastName;
     private String role;
     private String about;
+    private String skills;
+    private String projects;
+    private String experiences;
+    private String assignments;
+    private String profilePicture;
     private Boolean disabled;
     private String verificationCode;
     private String resetToken;
